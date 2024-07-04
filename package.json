@@ -1,0 +1,27 @@
+{
+  "name": "auto-signs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ManuJCarrion/auto-signs.git"
+  },
+  "author": "manu-j-carrion",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ManuJCarrion/auto-signs/issues
+  },
+  "homepage": "https://github.com/ManuJCarrion/auto-signs#readme",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "dayjs": "^1.9.4",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "node-cron": "^2.0.3",
+    "qs": "^6.9.4"
+  }
+}
