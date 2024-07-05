@@ -13,9 +13,7 @@ if (process.env.NODE_ENV === 'development') {
 async function doLogin(username, password) {
     const body = { grant_type: 'password', username, password };
 
-    return axios.post(process.env.AUTH_URL, qs.stringify(body)).then((res) => {
-        res.data.access_token, res.data.userName;
-    });
+    return axios.post(process.env.AUTH_URL, qs.stringify(body)).then((res) => res.data);
 }
 
 async function getIsHoliday(userId, accessToken) {
@@ -37,7 +35,10 @@ async function postSign(accessToken) {
 }
 
 async function main() {
-    const { accessToken, userName } = await doLogin(process.env.USERNAME, process.env.PASSWORD);
+    const userData = await doLogin(process.env.USERNAME, process.env.PASSWORD);
+    const accessToken = userData.accessToken;
+    const userName = userData.userName;
+    console.log('userData', userData);
     console.log('accessToken', accessToken);
     console.log('userName', userName);
     const isHoliday = await getIsHoliday(userName, accessToken);
