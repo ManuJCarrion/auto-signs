@@ -5,15 +5,15 @@ function buildAuthorizationHeader(accessToken) {
 }
 
 function getTodayDate() {
-    return dayjs().format('YYYY-MM-DD');
+    return dayjs().format('YYYY-MM-DD').tz("Europe/Madrid");
 }
 
 function getCurrentMonth() {
-    return dayjs().month();
+    return dayjs().month().tz("Europe/Madrid");
 }
 
 function getTime() {
-    return dayjs().format('hh:mm');
+    return dayjs().format('mm:ss').tz("Europe/Madrid");
 }
 
 function getSignerCronHours() {
