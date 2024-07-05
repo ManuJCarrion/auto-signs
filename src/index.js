@@ -72,6 +72,10 @@ async function keepAlive() {
             timezone,
         });
 
+        console.log(`getTime`, utils.getTime());
+        console.log(`getTodayDate`, utils.getTodayDate());
+        console.log(`getCurrentMonth`, utils.getCurrentMonth());
+
         const app = express();
         keepAliveCron.start();
         signerCron.start();
