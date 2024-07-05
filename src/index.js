@@ -36,10 +36,10 @@ async function postSign(accessToken) {
 
 async function main() {
     const userData = await doLogin(process.env.USERNAME, process.env.PASSWORD);
-    const accessToken = userData.accessToken;
+    const accessToken = userData.access_token;
     const userName = userData.userName;
     console.log('userData');
-    console.log('accessToken');
+    console.log('access_token');
     console.log('userName');
     const isHoliday = await getIsHoliday(userName, accessToken);
     console.log('isHoliday', isHoliday);
