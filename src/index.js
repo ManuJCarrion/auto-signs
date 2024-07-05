@@ -59,7 +59,7 @@ async function main() {
 
 async function keepAlive() {
     await axios.get(process.env.APP_URL);
-    console.log(`keepAlive`);
+    console.log(`keepAlive`, utils.getTime());
 }
 
 (async () => {
