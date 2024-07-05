@@ -13,7 +13,7 @@ function getCurrentMonth() {
 }
 
 function getTime() {
-    return dayjs().format('mm:ss');
+    return dayjs().format('hh:mm');
 }
 
 function getSignerCronHours() {
