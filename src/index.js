@@ -18,7 +18,7 @@ async function doLogin(username, password) {
 
 async function getIsHoliday(username, accessToken) {
     const headers = utils.buildAuthorizationHeader(accessToken);
-
+    console.log(`${process.env.API_URL}/users/${username}/workdaylite`)
     return await axios
         .get(`${process.env.API_URL}/users/${username}/workdaylite`, { headers })
         .then((res) => res.data.IsHoliday || res.data.IsWeekend)
