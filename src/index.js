@@ -16,13 +16,11 @@ async function doLogin(username, password) {
     return axios.post(process.env.AUTH_URL, qs.stringify(body)).then((res) => res.data);
 }
 
-async function getIsHoliday(userId, accessToken) {
-    console.log(userId, accessToken)
+async function getIsHoliday(userName, accessToken) {
     const headers = utils.buildAuthorizationHeader(accessToken);
 
-    console.log('headers', headers)
     return await axios
-        .get(`${process.env.API_URL}/users/${userId}/workdaylite`, { params, headers })
+        .get(`${process.env.API_URL}/users/${userId}/workdaylite`, { headers })
         .then((res) =>{ 
             console.log(res.data.IsHoliday || res.data.IsWeekend)
             return (res.data.IsHoliday || res.data.IsWeekend)
