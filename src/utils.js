@@ -1,55 +1,53 @@
-const dayjs = require("dayjs");
+const dayjs = require('dayjs');
 
 function buildAuthorizationHeader(accessToken) {
-  return { authorization: `Bearer ${accessToken}` };
+    return { authorization: `Bearer ${accessToken}` };
 }
 
 function getTodayDate() {
-  return dayjs().format("YYYY-MM-DD");
+    return dayjs().format('YYYY-MM-DD');
 }
 
-function padLeft(value) {
-  if (value >= 10) {
-    return value.toString();
-  }
-
-  return `0${value}`;
+function getCurrentMonth() {
+    return dayjs().month();
 }
 
-function getSlotHour(slot) {
-  const todayDate = getTodayDate();
-  console.log(todayDate)
-
-  switch (slot) {
-    case 1: {
-      return `${todayDate}T${padLeft(process.env.START_HOUR)}:00:00+01:00`;
-    }
-    case 2: {
-      return `${todayDate}T${padLeft(process.env.BREAK_START_HOUR)}:00:00+01:00`;
-    }
-    case 3: {
-      return `${todayDate}T${padLeft(process.env.BREAK_END_HOUR)}:00:00+01:00`;
-    }
-    case 4: {
-      return `${todayDate}T${padLeft(process.env.END_HOUR)}:00:00+01:00`;
-    }
-  }
+function getTime() {
+    return dayjs().format('mm:ss');
 }
 
-function buildSign(userId, slot) {
-  const date = getSlotHour(slot);
+function getSignerCronHours() {
+    const month = getCurrentMonth();
+    let signerCronHour = [];
+    if (month >= process.env.START_CONTINUOUS_PERIOD && month <= process.env.END_CONTINUOUS_PERIOD) {
+        signerCronHour = [process.env.START_HOUR, process.env.BREAK_END_HOUR];
+    } else {
+        signerCronHour = [
+            process.env.START_HOUR,
+            process.env.BREAK_START_HOUR,
+            process.env.BREAK_END_HOUR,
+            process.env.END_HOUR,
+        ];
+    }
 
-  return {
-    DeviceId: "WebApp",
-    EndDate: date,
-    StartDate: date,
-    TimezoneOffset: -60,
-    UserId: userId,
-  };
+    return signerCronHour.join(',').toString();
+}
+
+function buildSign() {
+    return {
+        agreementEventId: null,
+        requestId: null,
+        deviceId: 'WebApp',
+        latitude: process.env.LATITUDE,
+        longitude: process.env.LONGITUDE,
+        timezoneOffset: process.env.TIMEZONEOFFSET,
+    };
 }
 
 module.exports = {
-  buildAuthorizationHeader,
-  getTodayDate,
-  buildSign,
+    buildAuthorizationHeader,
+    getTodayDate,
+    getTime,
+    getSignerCronHours,
+    buildSign,
 };
