@@ -38,9 +38,9 @@ async function main() {
     const userData = await doLogin(process.env.USERNAME, process.env.PASSWORD);
     const accessToken = userData.accessToken;
     const userName = userData.userName;
-    console.log('userData', userData);
-    console.log('accessToken', accessToken);
-    console.log('userName', userName);
+    console.log('userData');
+    console.log('accessToken');
+    console.log('userName');
     const isHoliday = await getIsHoliday(userName, accessToken);
     console.log('isHoliday', isHoliday);
     console.log('getTime', utils.getTime());
@@ -69,7 +69,7 @@ async function keepAlive() {
         const keepAliveCron = cron.schedule('*/2 * * * *', keepAlive, { timezone });
         const signerCronHours = utils.getSignerCronHours();
         console.log('signerCronHours', signerCronHours);
-        const signerCron = new cron.schedule(`*/3 12 * * 1-5`, main, {
+        const signerCron = new cron.schedule(`0 ${signerCronHours} * * 1-5`, main, {
             timezone,
         });
 
