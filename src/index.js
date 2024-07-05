@@ -26,7 +26,7 @@ async function getUserId(accessToken) {
 
 async function getIsHoliday(userid, accessToken) {
     const headers = utils.buildAuthorizationHeader(accessToken);
-    console.log(`${process.env.API_URL}/users/${userid}/workdaylite`)
+    
     return await axios
         .get(`${process.env.API_URL}/users/${userid}/workdaylite`, { headers })
         .then((res) => res.data.IsHoliday || res.data.IsWeekend)
@@ -37,12 +37,7 @@ async function postSign(accessToken) {
     const headers = utils.buildAuthorizationHeader(accessToken);
     const body = utils.buildSign();
 
-    console.log('postSign - headers');
-    console.log(headers);
-    console.log('body');
-    console.log( body);
-
-    return { signEventId: 'a1a00ffd-6fb7-4910-8194-df8a3d811573' };
+    return await axios.post(`${process.env.API_URL}/svc/signs/signs`, body, { headers });
 }
 
 async function main() {
@@ -51,8 +46,7 @@ async function main() {
     const accessToken = userData.access_token;
     const userId = await getUserId(accessToken);
     
-    const isHoliday = await getIsHoliday(process.env.USERID, accessToken);
-    console.log('isHoliday', isHoliday);
+    const isHoliday = await getIsHoliday(userId, accessToken);
 
     if (isHoliday) {
         console.log('Hoy no ce trabaha shurras!');
@@ -78,7 +72,7 @@ async function keepAlive() {
         const keepAliveCron = cron.schedule('*/15 * * * *', keepAlive, { timezone });
         const signerCronHours = utils.getSignerCronHours();
         
-        const signerCron = new cron.schedule(`*/1 ${process.env.BREAK_END_HOUR} * * 1-5`, main, {
+        const signerCron = new cron.schedule(`0 ${signerCronHours} * * 1-5`, main, {
             timezone,
         });
 
