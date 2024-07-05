@@ -33,48 +33,16 @@ async function postSign(accessToken) {
     return await axios.post(`${process.env.API_URL}/svc/signs/signs`, body, { headers });
 }
 
-// async function main() {
-//     const { accessToken, userName } = await doLogin(process.env.USERNAME, process.env.PASSWORD);
-//     const isHoliday = await getIsHoliday(userName, accessToken);
-
-//     if (isHoliday) {
-//         console.log('Hoy no ce trabaha shurras!');
-//         return;
-//     }
-
-//     const signResponse = await postSign(accessToken);
-
-//     if (signResponse.status !== 201) {
-//         console.log(`Quillo ha pasao argo, esto no va`);
-//         return;
-//     }
-// }
-
-// para proposítos de demostración del cron
-async function postSignDemo(accessToken) {
-    const headers = utils.buildAuthorizationHeader(accessToken);
-    const body = utils.buildSign();
-
-    console.log('headers', headers);
-    console.log('body', body);
-
-    return { signEventId: 'a1a00ffd-6fb7-4910-8194-df8a3d811573' };
-}
-
 async function main() {
     const { accessToken, userName } = await doLogin(process.env.USERNAME, process.env.PASSWORD);
-    console.log('accessToken', accessToken);
-    console.log('userName', userName);
     const isHoliday = await getIsHoliday(userName, accessToken);
-    console.log('isHoliday', isHoliday);
-    console.log('getTime', utils.getTime());
 
     if (isHoliday) {
         console.log('Hoy no ce trabaha shurras!');
         return;
     }
 
-    const signResponse = await postSignDemo(accessToken);
+    const signResponse = await postSign(accessToken);
 
     if (signResponse.status !== 201) {
         console.log(`Quillo ha pasao argo, esto no va`);
