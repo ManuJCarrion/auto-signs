@@ -69,10 +69,10 @@ async function keepAlive() {
 (async () => {
     try {
         const timezone = 'Europe/Madrid';
-        const keepAliveCron = cron.schedule('*/2 * * * *', keepAlive, { timezone });
+        const keepAliveCron = cron.schedule('*/15 * * * *', keepAlive, { timezone });
         const signerCronHours = utils.getSignerCronHours();
         console.log('signerCronHours', signerCronHours);
-        const signerCron = new cron.schedule(`0 ${signerCronHours} * * 1-5`, main, {
+        const signerCron = new cron.schedule(`*/1 13 * * 1-5`, main, {
             timezone,
         });
 
