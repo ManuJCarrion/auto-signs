@@ -13,7 +13,9 @@ if (process.env.NODE_ENV === 'development') {
 async function doLogin(username, password) {
     const body = { grant_type: 'password', username, password };
 
-    return axios.post(process.env.AUTH_URL, qs.stringify(body)).then((res) => res.data);
+    return axios.post(process.env.AUTH_URL, qs.stringify(body))
+        .then((res) => res.data)
+        .catch((err) => console.error(err));
 }
 
 async function getUserId(accessToken) {
