@@ -47,6 +47,7 @@ function buildSign() {
 module.exports = {
     buildAuthorizationHeader,
     getTodayDate,
+    getCurrentMonth,
     getTime,
     getSignerCronHours,
     buildSign,
