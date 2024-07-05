@@ -14,7 +14,7 @@ function getTodayDate() {
 }
 
 function getCurrentMonth() {
-    return dayjs().tz("Europe/Madrid").month();
+    return dayjs().month();
 }
 
 function getTime() {
