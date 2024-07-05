@@ -21,8 +21,8 @@ async function getIsHoliday(userName, accessToken) {
 
     return await axios
         .get(`${process.env.API_URL}/users/${userId}/workdaylite`, { headers })
-        .then((res) => res.data.IsHoliday || res.data.IsWeekend
-        );
+        .then((res) => res.data.IsHoliday || res.data.IsWeekend).
+        catch((err) => console.error(err));
 }
 
 async function postSign(accessToken) {
