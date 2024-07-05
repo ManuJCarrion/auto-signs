@@ -42,7 +42,7 @@ async function main() {
     const userData = await doLogin(process.env.USERNAME, process.env.PASSWORD);
     const accessToken = userData.access_token;
     
-    const isHoliday = await getIsHoliday(process.env.USERNAME, accessToken);
+    const isHoliday = await getIsHoliday(process.env.USERID, accessToken);
     console.log('isHoliday', isHoliday);
 
     if (isHoliday) {
