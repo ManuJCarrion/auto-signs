@@ -18,7 +18,7 @@ function getCurrentMonth() {
 }
 
 function getTime() {
-    return dayjs().tz("Europe/Madrid").format('mm:ss');
+    return dayjs().tz("Europe/Madrid").format('hh:mm');
 }
 
 function getSignerCronHours() {
