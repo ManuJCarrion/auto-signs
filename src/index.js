@@ -17,11 +17,16 @@ async function doLogin(username, password) {
 }
 
 async function getIsHoliday(userId, accessToken) {
+    console.log(userId, accessToken)
     const headers = utils.buildAuthorizationHeader(accessToken);
 
+    console.log('headers', headers)
     return await axios
         .get(`${process.env.API_URL}/users/${userId}/workdaylite`, { params, headers })
-        .then((res) => res.data.IsHoliday || res.data.IsWeekend);
+        .then((res) =>{ 
+            console.log(res.data.IsHoliday || res.data.IsWeekend)
+            return (res.data.IsHoliday || res.data.IsWeekend)
+        });
 }
 
 async function postSign(accessToken) {
@@ -38,9 +43,7 @@ async function main() {
     const userData = await doLogin(process.env.USERNAME, process.env.PASSWORD);
     const accessToken = userData.access_token;
     const userName = userData.userName;
-    console.log('userData');
-    console.log('access_token');
-    console.log('userName');
+    
     const isHoliday = await getIsHoliday(userName, accessToken);
     console.log('isHoliday', isHoliday);
     console.log('getTime', utils.getTime());
