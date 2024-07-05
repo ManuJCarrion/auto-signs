@@ -17,11 +17,11 @@
   },
   "homepage": "https://github.com/ManuJCarrion/auto-signs#readme",
   "dependencies": {
-    "axios": "^0.21.0",
-    "dayjs": "^1.9.4",
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "node-cron": "^2.0.3",
-    "qs": "^6.9.4"
+    "axios": "^1.7.2",
+    "dayjs": "^1.11.11",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "node-cron": "^3.0.3",
+    "qs": "^6.12.2"
   }
 }
