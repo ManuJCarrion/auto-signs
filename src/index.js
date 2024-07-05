@@ -16,11 +16,11 @@ async function doLogin(username, password) {
     return axios.post(process.env.AUTH_URL, qs.stringify(body)).then((res) => res.data);
 }
 
-async function getIsHoliday(userName, accessToken) {
+async function getIsHoliday(username, accessToken) {
     const headers = utils.buildAuthorizationHeader(accessToken);
 
     return await axios
-        .get(`${process.env.API_URL}/users/${userId}/workdaylite`, { headers })
+        .get(`${process.env.API_URL}/users/${username}/workdaylite`, { headers })
         .then((res) => res.data.IsHoliday || res.data.IsWeekend)
         .catch((err) => console.error(err));
 }
@@ -41,9 +41,9 @@ async function main() {
     console.log('entro en main')
     const userData = await doLogin(process.env.USERNAME, process.env.PASSWORD);
     const accessToken = userData.access_token;
-    const userName = userData.userName;
+    const username = userData.userName;
     
-    const isHoliday = await getIsHoliday(userName, accessToken);
+    const isHoliday = await getIsHoliday(username, accessToken);
     console.log('isHoliday', isHoliday);
 
     if (isHoliday) {
