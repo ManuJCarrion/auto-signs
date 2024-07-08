@@ -56,17 +56,25 @@ async function main() {
     }
 
     const signResponse = await postSign(accessToken);
-    console.log('signResponse', signResponse)
 
     if (signResponse.status !== 201) {
         console.log(`Quillo ha pasao argo, esto no va`);
         return;
+    } else {
+        console.log('Hora picada correctamente')
     }
 }
 
 async function keepAlive() {
     await axios.get(process.env.APP_URL);
-    console.log(`keepAlive`, utils.getTime());
+    // Acceder a la web no le parece suficiente para seguir activo 
+    // procedo a pedir credenciales y comprobar el día para mantener el servicio activo
+
+    const userData = await doLogin(process.env.USERNAME, process.env.PASSWORD);
+    const accessToken = userData.access_token;
+    const userId = await getUserId(accessToken);
+    
+    const isHoliday = await getIsHoliday(userId, accessToken);
 }
 
 (async () => {
