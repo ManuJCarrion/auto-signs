@@ -78,8 +78,9 @@ async function keepAlive() {
     
     const isHoliday = await getIsHoliday(userId, accessToken);
 
+    console.log('randomMinutes - old', randomMinutes)
     randomMinutes = Math.floor(Math.random() * 21)
-    console.log('randomMinutes', randomMinutes)
+    console.log('randomMinutes - new', randomMinutes)
 }
 
 (async () => {
