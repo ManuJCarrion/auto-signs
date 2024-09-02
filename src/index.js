@@ -6,6 +6,8 @@ const express = require('express');
 
 const utils = require('./utils');
 
+let randomMinutes = 0;
+
 if (process.env.NODE_ENV === 'development') {
     dotenv.config();
 }
@@ -75,6 +77,9 @@ async function keepAlive() {
     const userId = await getUserId(accessToken);
     
     const isHoliday = await getIsHoliday(userId, accessToken);
+
+    randomMinutes = Math.floor(Math.random() * 21)
+    console.log('randomMinutes', randomMinutes)
 }
 
 (async () => {
@@ -83,7 +88,7 @@ async function keepAlive() {
         const keepAliveCron = cron.schedule('*/20 * * * *', keepAlive, { timezone });
         const signerCronHours = utils.getSignerCronHours();
         
-        const signerCron = new cron.schedule(`0 ${signerCronHours} * * 1-5`, main, {
+        const signerCron = new cron.schedule(`${randomMinutes} ${signerCronHours} * * 1-5`, main, {
             timezone,
         });
 
