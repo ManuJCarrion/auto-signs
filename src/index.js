@@ -58,7 +58,14 @@ async function main() {
         return;
     }
     setTimeout(async () => {
-        console.log('asdf')
+        const signResponse = await postSign(accessToken);
+    
+        if (signResponse.status !== 201) {
+            console.log(`Quillo ha pasao argo, esto no va`);
+            return;
+        } else {
+            console.log('Hora picada correctamente')
+        }
     }, randomMS);
 }
 
@@ -80,7 +87,7 @@ async function keepAlive() {
         const keepAliveCron = cron.schedule('*/20 * * * *', keepAlive, { timezone });
         const signerCronHours = utils.getSignerCronHours();
         
-        const signerCron = new cron.schedule(`* ${signerCronHours} * * 1-5`, main, {
+        const signerCron = new cron.schedule(`0 ${signerCronHours} * * 1-5`, main, {
             timezone,
         });
 
