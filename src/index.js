@@ -6,7 +6,6 @@ const express = require('express');
 
 const utils = require('./utils');
 
-let randomMinutes = 0;
 
 if (process.env.NODE_ENV === 'development') {
     dotenv.config();
@@ -46,25 +45,28 @@ async function postSign(accessToken) {
 
 async function main() {
     console.log('entro en main')
-    const userData = await doLogin(process.env.USERNAME, process.env.PASSWORD);
-    const accessToken = userData.access_token;
-    const userId = await getUserId(accessToken);
+    const randomMS = (Math.floor(Math.random() * 21) * 60) * 1000
+    setTimeout(() => {
+        const userData = await doLogin(process.env.USERNAME, process.env.PASSWORD);
+        const accessToken = userData.access_token;
+        const userId = await getUserId(accessToken);
+        
+        const isHoliday = await getIsHoliday(userId, accessToken);
     
-    const isHoliday = await getIsHoliday(userId, accessToken);
-
-    if (isHoliday) {
-        console.log('Hoy no ce trabaha shurras!');
-        return;
-    }
-
-    const signResponse = await postSign(accessToken);
-
-    if (signResponse.status !== 201) {
-        console.log(`Quillo ha pasao argo, esto no va`);
-        return;
-    } else {
-        console.log('Hora picada correctamente')
-    }
+        if (isHoliday) {
+            console.log('Hoy no ce trabaha shurras!');
+            return;
+        }
+    
+        const signResponse = await postSign(accessToken);
+    
+        if (signResponse.status !== 201) {
+            console.log(`Quillo ha pasao argo, esto no va`);
+            return;
+        } else {
+            console.log('Hora picada correctamente')
+        }
+    }, randomMS);
 }
 
 async function keepAlive() {
@@ -77,10 +79,6 @@ async function keepAlive() {
     const userId = await getUserId(accessToken);
     
     const isHoliday = await getIsHoliday(userId, accessToken);
-
-    console.log('randomMinutes - old', randomMinutes)
-    randomMinutes = Math.floor(Math.random() * 21)
-    console.log('randomMinutes - new', randomMinutes)
 }
 
 (async () => {
@@ -89,7 +87,7 @@ async function keepAlive() {
         const keepAliveCron = cron.schedule('*/20 * * * *', keepAlive, { timezone });
         const signerCronHours = utils.getSignerCronHours();
         
-        const signerCron = new cron.schedule(`${randomMinutes} ${signerCronHours} * * 1-5`, main, {
+        const signerCron = new cron.schedule(`* ${signerCronHours} * * 1-5`, main, {
             timezone,
         });
 
