@@ -47,17 +47,17 @@ async function main() {
     console.log('entro en main')
     const randomMS = (Math.floor(Math.random() * 21) * 60) * 1000
     
-        const userData = await doLogin(process.env.USERNAME, process.env.PASSWORD);
-        const accessToken = userData.access_token;
-        const userId = await getUserId(accessToken);
-        
-        const isHoliday = await getIsHoliday(userId, accessToken);
+    const userData = await doLogin(process.env.USERNAME, process.env.PASSWORD);
+    const accessToken = userData.access_token;
+    const userId = await getUserId(accessToken);
     
-        if (isHoliday) {
-            console.log('Hoy no ce trabaha shurras!');
-            return;
-        }
-    setTimeout(() => {
+    const isHoliday = await getIsHoliday(userId, accessToken);
+
+    if (isHoliday) {
+        console.log('Hoy no ce trabaha shurras!');
+        return;
+    }
+    setTimeout(async () => {
         const signResponse = await postSign(accessToken);
     
         if (signResponse.status !== 201) {
