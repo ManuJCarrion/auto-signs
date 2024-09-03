@@ -46,7 +46,7 @@ async function postSign(accessToken) {
 async function main() {
     console.log('entro en main')
     const randomMS = (Math.floor(Math.random() * 21) * 60) * 1000
-    setTimeout(() => {
+    
         const userData = await doLogin(process.env.USERNAME, process.env.PASSWORD);
         const accessToken = userData.access_token;
         const userId = await getUserId(accessToken);
@@ -57,7 +57,7 @@ async function main() {
             console.log('Hoy no ce trabaha shurras!');
             return;
         }
-    
+    setTimeout(() => {
         const signResponse = await postSign(accessToken);
     
         if (signResponse.status !== 201) {
