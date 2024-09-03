@@ -58,14 +58,7 @@ async function main() {
         return;
     }
     setTimeout(async () => {
-        const signResponse = await postSign(accessToken);
-    
-        if (signResponse.status !== 201) {
-            console.log(`Quillo ha pasao argo, esto no va`);
-            return;
-        } else {
-            console.log('Hora picada correctamente')
-        }
+        console.log('asdf')
     }, randomMS);
 }
 
