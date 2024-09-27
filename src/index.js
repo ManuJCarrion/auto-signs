@@ -87,9 +87,9 @@ async function keepAlive() {
         const keepAliveCron = cron.schedule('*/20 * * * *', keepAlive, { timezone });
         const signerCronHours = utils.getSignerCronHours();
         
-        const signerCron = new cron.schedule(`0 ${signerCronHours} * * 1-5`, main, {
-            timezone,
-        });
+       // const signerCron = new cron.schedule(`0 ${signerCronHours} * * 1-5`, main, {
+       //     timezone,
+       // });
 
         const app = express();
         keepAliveCron.start();
